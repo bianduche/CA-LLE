@@ -1,15 +1,55 @@
-# CA-LLE
-# Enhanced Low-Light Image Enhancement with Cognitive Awareness
+# CA-LLE (`ca_lle` package)
 
-基于认知感知的增强型低光图像增强模型，结合CLIP语义编码器和自适应调制机制，实现高质量的低光图像增强。
+**Cognitive-Aware Low-Light Enhancement** — modular PyTorch code: frozen **OpenCLIP** semantics + **U-Net** enhancement with FiLM and multi-scale attention.
 
-## 特性
-- 结合CLIP语义编码器的认知感知增强
-- 自适应FiLM层和多尺度注意力门控
-- 多损失函数融合（重建、颜色、平滑度）
-- 自适应早停机制和学习率调度
-- 支持有监督和自监督训练
+## What lives here
 
-## 环境配置
+| Module | Role |
+|--------|------|
+| `semantic_encoder.py` | Frozen CLIP ViT-B-32 image encoder |
+| `conditioning.py` | FiLM modulation, semantic attention gates |
+| `residual.py` | Channel attention, residual blocks |
+| `unet.py` | Encoder–bottleneck–decoder with skip connections |
+| `enhancer.py` | `EnhancedCognitiveAwareEnhancer`, `build_enhanced_model()` |
+| `losses.py` | Supervised reconstruction/color/smoothness; self-supervised term |
+| `dataset.py` | `EnhancedLowLightDataset` (paired or low-light-only) |
+| `callbacks.py` | SSIM-based early stopping with warmup |
+| `train_utils.py` | One epoch, loss aggregation, PSNR/SSIM/LPIPS validation |
+| `trainer.py` | Full training loop (optimizer, scheduler, checkpoints) |
+| `inference.py` | Run a checkpoint on a folder of images |
+
+Public imports are re-exported from `ca_lle/__init__.py` (`__version__`, model builder, losses).
+
+## Dependencies
+
+See **`requirements.txt`** in this directory (same pins as the repository root). Install CUDA-enabled PyTorch from [pytorch.org](https://pytorch.org) if you use a GPU.
+
+From the **parent** directory of this package (repository root):
+
 ```bash
 pip install -r requirements.txt
+```
+
+Or, from the root, referencing this file:
+
+```bash
+pip install -r ca_lle/requirements.txt
+```
+
+## Usage
+
+**Programmatic:**
+
+```python
+from ca_lle import build_enhanced_model, enhanced_loss_recon
+
+model = build_enhanced_model(base_channels=32, use_attention=True)
+```
+
+**Command-line** (repo root): run `main_enhanced.py` — see the top-level **`README.md`** for training (`--mode train`) and inference (`--mode infer`), including low-light-only (self-supervised) training.
+
+**Legacy import path:** `import model_enhanced` at the repo root still re-exports the same symbols.
+
+## Citation / license
+
+See the repository **README.md** for citation block and license notice. Third-party weights (OpenCLIP, etc.) follow their original licenses.
