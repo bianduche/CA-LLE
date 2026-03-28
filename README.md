@@ -1,4 +1,4 @@
-# CA-LLE
+# CA-LLE (`ca_lle` package)
 
 **Cognitive-Aware Low-Light Enhancement** — modular PyTorch code: frozen **OpenCLIP** semantics + **U-Net** enhancement with FiLM and multi-scale attention.
 
