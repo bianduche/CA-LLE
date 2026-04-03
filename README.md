@@ -1,6 +1,6 @@
 # CA-LLE
 **Cognitive-Aware Low-Light Enhancement** — modular PyTorch code: frozen **OpenCLIP** semantics + **U-Net** enhancement with FiLM and multi-scale attention.
-
+This repository contains the official implementation for the manuscript 'Cognition-Guided Semantic Enhancement for Unsupervised Low-Light Image Restoration' submitted to The Visual Computer. We urge readers to cite this manuscript when using the code.
 LLS data：通过网盘分享的文件：LLS
 链接: https://pan.baidu.com/s/10d2MQe5oDH8jRb2wnNjLzQ?pwd=8kmh 提取码: 8kmh
 
